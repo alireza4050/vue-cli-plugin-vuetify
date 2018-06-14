@@ -2,10 +2,10 @@ const fs = require('fs')
 
 module.exports = function (api) {
   return {
-    updateBabelConfig (callback) {
+    updateConfig (rcFile, callback) {
       let config, configPath
 
-      const rcPath = api.resolve('./babel.config.js')
+      const rcPath = api.resolve(`./${rcFile}`)
       const pkgPath = api.resolve('./package.json')
       if (fs.existsSync(rcPath)) {
         configPath = rcPath
@@ -30,7 +30,7 @@ module.exports = function (api) {
           { encoding: 'utf8' }
         )
       } else {
-        // TODO: handle if babel config doesn't exist
+        // TODO: handle if config doesn't exist
       }
     },
 

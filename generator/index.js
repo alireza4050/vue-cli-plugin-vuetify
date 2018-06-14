@@ -25,6 +25,13 @@ module.exports = (api, opts, rootOpts) => {
     })
   }
 
+  if(opts.rtlSupport) {
+    api.extendPackage({
+      devDependencies: {
+        "postcss-rtl": "^1.3.0",
+      }
+    })
+  }
   // Render vuetify plugin file
   api.render({
     './src/plugins/vuetify.js': './templates/default/src/plugins/vuetify.js'
@@ -63,7 +70,7 @@ module.exports = (api, opts, rootOpts) => {
 
     // Add polyfill
     if (opts.usePolyfill) {
-      helpers.updateBabelConfig(cfg => {
+      helpers.updateConfig('babel.config.js', cfg => {
         if (!cfg.presets) return cfg
 
         const vuePresetIndex = cfg.presets.findIndex(p => Array.isArray(p) ? p[0] === '@vue/app' : p === '@vue/app')
@@ -91,6 +98,15 @@ module.exports = (api, opts, rootOpts) => {
         }
 
         return src
+      })
+    }
+
+    // Add postcss-rtl
+    if (opts.rtlSupport) {
+      helpers.updateConfig('.postcssrc.js', cfg => {
+        if (!cfg.plugins) return cfg
+        cfg.plugins['postcss-rtl'] = {}
+        return cfg
       })
     }
 

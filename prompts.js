@@ -22,5 +22,11 @@ module.exports = [
     type: 'confirm',
     message: 'Use babel/polyfill?',
     default: true
+  },
+  {
+    name: 'rtlSupport',
+    type: 'confirm',
+    message: 'Support Right-To-Left languages layout?',
+    default: false,
   }
 ]
